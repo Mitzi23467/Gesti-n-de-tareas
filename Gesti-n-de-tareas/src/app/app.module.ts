@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
-import { TasksModule } from './tasks/tasks.module';
-import { StudentsModule } from './students/students.module';
-import { ProjectsModule } from './projects/projects.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { AlumnosComponent } from './alumnos/alumnos.component';
+import { TareasComponent } from './tareas/tareas.component';
+import { ProyectosComponent } from './proyectos/proyectos.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    AlumnosComponent,
+    TareasComponent,
+    ProyectosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
-    TasksModule,
-    StudentsModule,
-    ProjectsModule,
     HttpClientModule
   ],
   providers: [],
