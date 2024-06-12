@@ -10,11 +10,3 @@
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     z-index: -1; /* Asegura que la imagen esté detrás del contenido */
 }
-
-.tabla1{
-    margin-top: 50px;
-    margin-left: 20px;
-    margin-right: 10px;
-    text-align: center;
-}
-

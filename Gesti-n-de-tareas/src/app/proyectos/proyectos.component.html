@@ -1,1 +1,25 @@
-<p>proyectos works!</p>
+<div class="container mt-5" class="background-image">
+  <h2 class="text-center" class="tabla1" >Lista de Proyectos</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Equipo</th>
+        <th>Descripción</th>
+        <th>Fecha Límite</th>
+        <th>Etapas</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let proyecto of proyectos">
+        <td>{{ proyecto.id_proyecto }}</td>
+        <td>{{ proyecto.equipo }}</td>
+        <td>{{ proyecto.descripcion }}</td>
+        <td>{{ proyecto.fecha_limite | date }}</td>
+        <td>{{ proyecto.etapas }}</td>
+        <td>{{ proyecto.estado }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

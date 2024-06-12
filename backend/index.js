@@ -1,24 +1,23 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
-const mysql = require('mysql2');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
 
 const app = express();
-const port = 3000;
 
-// Configurar middleware
-app.use(bodyParser.json());
+// Middlewares
 app.use(cors());
+app.use(bodyParser.json());
 
-// Configurar conexión a la base de datos
+// Base de datos
 const db = mysql.createConnection({
   host: '10.10.11.122',
   user: 'admin',
-  password: 'Anita-12345',  // Cambia esto por tu contraseña
-  database: 'Anita'       // Cambia esto por tu base de datos
+  password: 'Anita-12345',
+  database: 'Anita'
 });
 
-db.connect((err) => {
+db.connect(err => {
   if (err) {
     console.error('Error al conectar a la base de datos:', err);
     return;
@@ -26,30 +25,60 @@ db.connect((err) => {
   console.log('Conectado a la base de datos MySQL');
 });
 
-// Validar nombres de tablas
-const isValidTableName = (tableName) => {
-  // Sólo permitir letras, números y guiones bajos
-  const validTableNamePattern = /^[a-zA-Z0-9_]+$/;
-  return validTableNamePattern.test(tableName);
-};
-
-// Ruta para obtener todos los registros de una tabla específica
-app.get('/api/:table', (req, res) => {
-  const tableName = req.params.table;
-  if (!isValidTableName(tableName)) {
-    return res.status(400).json({ error: 'Nombre de tabla inválido' });
-  }
-
-  const sql = `SELECT * FROM ??`;
-  db.query(sql, [tableName], (err, results) => {
+// Rutas
+app.post('/api/login', (req, res) => {
+  const { correoInstitucional, contrasena } = req.body;
+  const sql = `SELECT * FROM Alumno WHERE correo_institucional = ? AND contra = ?`;
+  db.query(sql, [correoInstitucional, contrasena], (err, result) => {
     if (err) {
-      return res.status(500).json({ error: err.message });
+      console.error('Error al realizar la consulta:', err);
+      res.status(500).json({ success: false, message: 'Error en el servidor' });
+      return;
+    }
+    if (result.length > 0) {
+      res.json({ success: true, message: 'Login exitoso' });
+    } else {
+      res.json({ success: false, message: 'Credenciales incorrectas' });
+    }
+  });
+});
+
+app.get('/api/alumnos', (req, res) => {
+  const sql = 'SELECT * FROM Alumno';
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error al obtener alumnos:', err);
+      res.status(500).send(err);
+      return;
     }
     res.json(results);
   });
 });
 
+app.get('/api/tareas', (req, res) => {
+  let sql = 'SELECT * FROM Tareas';
+  db.query(sql, (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+app.get('/api/proyectos', (req, res) => {
+  const sql = 'SELECT * FROM Proyectos';
+  db.query(sql, (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 // Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor ejecutándose en http://localhost:${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

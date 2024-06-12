@@ -1,1 +1,27 @@
-<p>tareas works!</p>
+<div class="container mt-5" class="background-image">
+  <h2 class="text-center" class="tabla2">Lista de Tareas</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha Límite</th>
+        <th>Estado</th>
+        <th>ID Alumno</th>
+        <th>ID Materia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tarea of tareas">
+        <td>{{ tarea.id_tarea }}</td>
+        <td>{{ tarea.nombre }}</td>
+        <td>{{ tarea.descripcion }}</td>
+        <td>{{ tarea.fecha_limite | date }}</td>
+        <td>{{ tarea.estado }}</td>
+        <td>{{ tarea.id_alumno }}</td>
+        <td>{{ tarea.id_materia }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
